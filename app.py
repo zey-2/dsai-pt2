@@ -2,12 +2,14 @@ from flask import Flask, render_template, request
 import joblib
 import os
 from groq import Groq
+from openai import OpenAI
 
 from dotenv import load_dotenv
 if os.path.exists('.env'):
     load_dotenv()
 
 os.environ["GROQ_API_KEY"] = os.environ.get('GROQ_API_KEY')
+os.environ["SEALION_API_KEY"] = os.environ.get('SEALION_API_KEY')
 client = Groq()
 
 app = Flask(__name__)
@@ -50,6 +52,26 @@ def llama_result():
         {"role": "user", "content": q}])
     r = r.choices[0].message.content
     return(render_template("llama_result.html",r=r))
+
+@app.route("/sealion",methods=["GET","POST"])
+def sealion():
+    return(render_template("sealion.html"))
+
+client_openai = OpenAI(
+    api_key=os.environ['SEALION_API_KEY'],
+    base_url="https://api.sea-lion.ai/v1"
+)
+
+@app.route("/sealion_result",methods=["GET","POST"])
+def sealion_result():
+    q = request.form.get("q")
+    r = client_openai.chat.completions.create(
+    model="aisingapore/Qwen-SEA-LION-v4-32B-IT",
+    messages=[
+        {"role": "user", 
+         "content": q}])
+    r = r.choices[0].message.content
+    return(render_template("sealion_result.html",r=r))
 
 if __name__ == "__main__":
     app.run()
