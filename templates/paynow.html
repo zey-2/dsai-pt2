@@ -19,8 +19,55 @@
 
     <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
     <script>
-        const contractAddress = "";
-        const contractABI = [];
+        const contractAddress = "0xA23649f43d9fe7525574075EA0824815F4bce834";
+        const contractABI = [[
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "payer_input",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "payee_input",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "amount_input",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "transfer_money",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "transfer_view",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            }
+        ]];
         const web3 = new Web3(Web3.givenProvider);
         const contract = new web3.eth.Contract(contractABI, contractAddress);
 
@@ -32,19 +79,16 @@
             console.log(payer,payee,amount);
             
             console.log("accounts[0] " + accounts[0]);
-            await contract.methods.weixin(payer, payee,amount).send({ from: accounts[0]});
+            await contract.methods.transfer_money(payer, payee,amount).send({ from: accounts[0]});
         }
 
         async function transaction() {
-            const result = await contract.methods.transaction().call();
+            const result = await contract.methods.transfer_view().call();
             document.getElementById('view_payer').innerText = "Payer: " + result[0];
             document.getElementById('view_payee').innerText = "Payee: " + result[1];
             document.getElementById('view_amount').innerText = "Amount: " + result[2];
         }
     </script>
-    <form action="/main" method="post">
-        <input type = "submit" value="Main">
-    </form>
     </div>
 </body>
 
