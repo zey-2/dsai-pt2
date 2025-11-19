@@ -22,8 +22,21 @@
     </form>
     <!-- External link to HuggingFace Space: opens in a new tab -->
     <a href="https://huggingface.co/spaces/zeyacry/german_credit" target="_blank" rel="noopener noreferrer">
-        <button type="button">German Credit (HuggingFace)/button>
+        <button type="button">Open German Credit (Hugging Face)</button>
     </a>
+    
+    <!-- Embedded Hugging Face Space (iframe). If the target prevents embedding, the link above serves as a fallback. -->
+    <div class="iframe-container" style="margin-top:1rem; max-width:850px; width:100%;">
+        <iframe
+            src="https://zeyacry-german-credit.hf.space"
+            frameborder="0"
+            width="850"
+            height="450"
+            style="max-width:100%; height:450px;"
+            title="German Credit (Hugging Face)"
+        ></iframe>
+        <p style="font-size:0.9rem; color: #555;">If the iframe doesn't load, <a href="https://huggingface.co/spaces/zeyacry/german_credit" target="_blank" rel="noopener noreferrer">open it in a new tab</a>.</p>
+    </div>
     </div>
 </body>
 
